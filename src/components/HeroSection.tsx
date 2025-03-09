@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -39,24 +39,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
   const renderContent = () => (
     <div className={cn(
-      "z-10 space-y-6 max-w-xl text-right", // Setting text-right for RTL
+      "z-10 space-y-6 max-w-xl text-right", 
       imagePosition === 'right' ? "text-right" : imagePosition === 'left' ? "text-right lg:text-left" : "text-center mx-auto"
     )}>
       <h1 
-        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight animate-on-load opacity-0 translate-y-4 transition-all duration-700"
-        dir="rtl" // Setting RTL direction for Hebrew
+        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight animate-on-load opacity-0 translate-y-4 transition-all duration-700 text-white drop-shadow-md"
+        dir="rtl"
       >
         {title}
       </h1>
       <p 
-        className="text-lg md:text-xl text-gray-600 animate-on-load opacity-0 translate-y-4 transition-all duration-700"
-        dir="rtl" // Setting RTL direction for Hebrew
+        className="text-xl md:text-2xl text-white animate-on-load opacity-0 translate-y-4 transition-all duration-700 font-medium drop-shadow-md"
+        dir="rtl"
       >
         {subtitle}
       </p>
       <div 
         className={cn(
-          "flex items-center gap-4 pt-4 animate-on-load opacity-0 translate-y-4 transition-all duration-700 flex-row-reverse", // Reversed flex for RTL
+          "flex items-center gap-4 pt-4 animate-on-load opacity-0 translate-y-4 transition-all duration-700 flex-row-reverse",
           imagePosition === 'background' || imagePosition === 'none' ? "justify-center" : ""
         )}
       >
@@ -64,7 +64,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           <Button 
             asChild
             size="lg" 
-            className="bg-company-lightblue hover:bg-company-blue text-white button-hover-effect"
+            className="bg-company-lightblue hover:bg-company-blue text-white button-hover-effect text-lg"
           >
             <Link to={primaryButtonLink} dir="rtl">
               <ArrowRight size={16} className="mr-2 rotate-180" /> {primaryButtonText}
@@ -76,7 +76,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             asChild
             variant="outline" 
             size="lg" 
-            className="button-hover-effect"
+            className="bg-white/20 backdrop-blur-sm border-white text-white hover:bg-white hover:text-company-blue button-hover-effect text-lg"
           >
             <Link to={secondaryButtonLink} dir="rtl">
               {secondaryButtonText}
@@ -99,12 +99,16 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           src={imageSrc} 
           alt="Hero" 
           className={cn(
-            "object-contain rounded-2xl animate-image-glow subtle-glow",
+            "object-contain w-full h-full rounded-lg",
             imagePosition === 'background' 
-              ? "w-full h-full opacity-20" 
-              : "w-full h-full lg:max-h-[600px] md:max-w-full"
+              ? "w-full h-full" 
+              : "w-full h-auto max-h-[80vh]"
           )}  
         />
+        <div className={cn(
+          imagePosition !== 'background' && "absolute inset-0 bg-gradient-to-r from-company-blue/70 to-transparent z-[-1]",
+          imagePosition === 'background' && "absolute inset-0 bg-company-blue/50 z-[-1]"
+        )}></div>
       </div>
     )
   );
@@ -112,10 +116,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section 
       className={cn(
-        "relative overflow-hidden pt-32 pb-16 md:py-32 rtl", // Added RTL class
+        "relative overflow-hidden pt-28 pb-16 md:py-32 rtl bg-company-blue/5",
         className
       )}
-      dir="rtl" // Setting RTL direction for the whole section
+      dir="rtl"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {imagePosition === 'background' && renderImage()}
@@ -123,8 +127,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div 
           className={cn(
             "relative flex flex-col gap-12",
-            imagePosition === 'right' ? "lg:flex-row-reverse items-center" : // Reversed for RTL
-            imagePosition === 'left' ? "lg:flex-row items-center" : // Reversed for RTL
+            imagePosition === 'right' ? "lg:flex-row-reverse items-center" :
+            imagePosition === 'left' ? "lg:flex-row items-center" :
             "items-center"
           )}
         >
