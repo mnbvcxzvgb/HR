@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowRight, Check, Briefcase, Clock, MapPin, GraduationCap, Users, Heart } from 'lucide-react';
+import { ArrowRight, Check, Briefcase, Clock, MapPin, GraduationCap, Users, Heart, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import HeroSection from '@/components/HeroSection';
