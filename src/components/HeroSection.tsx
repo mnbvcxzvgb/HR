@@ -39,22 +39,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
   const renderContent = () => (
     <div className={cn(
-      "z-10 space-y-6 max-w-xl",
-      imagePosition === 'right' ? "text-left" : imagePosition === 'left' ? "text-left lg:text-right" : "text-center mx-auto"
+      "z-10 space-y-6 max-w-xl text-right", // Setting text-right for RTL
+      imagePosition === 'right' ? "text-right" : imagePosition === 'left' ? "text-right lg:text-left" : "text-center mx-auto"
     )}>
       <h1 
         className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight animate-on-load opacity-0 translate-y-4 transition-all duration-700"
+        dir="rtl" // Setting RTL direction for Hebrew
       >
         {title}
       </h1>
       <p 
         className="text-lg md:text-xl text-gray-600 animate-on-load opacity-0 translate-y-4 transition-all duration-700"
+        dir="rtl" // Setting RTL direction for Hebrew
       >
         {subtitle}
       </p>
       <div 
         className={cn(
-          "flex items-center gap-4 pt-4 animate-on-load opacity-0 translate-y-4 transition-all duration-700",
+          "flex items-center gap-4 pt-4 animate-on-load opacity-0 translate-y-4 transition-all duration-700 flex-row-reverse", // Reversed flex for RTL
           imagePosition === 'background' || imagePosition === 'none' ? "justify-center" : ""
         )}
       >
@@ -64,8 +66,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             size="lg" 
             className="bg-company-lightblue hover:bg-company-blue text-white button-hover-effect"
           >
-            <Link to={primaryButtonLink}>
-              {primaryButtonText} <ArrowRight size={16} className="ml-2" />
+            <Link to={primaryButtonLink} dir="rtl">
+              <ArrowRight size={16} className="mr-2 rotate-180" /> {primaryButtonText}
             </Link>
           </Button>
         )}
@@ -76,7 +78,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             size="lg" 
             className="button-hover-effect"
           >
-            <Link to={secondaryButtonLink}>
+            <Link to={secondaryButtonLink} dir="rtl">
               {secondaryButtonText}
             </Link>
           </Button>
@@ -110,9 +112,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section 
       className={cn(
-        "relative overflow-hidden pt-32 pb-16 md:py-32",
+        "relative overflow-hidden pt-32 pb-16 md:py-32 rtl", // Added RTL class
         className
       )}
+      dir="rtl" // Setting RTL direction for the whole section
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
         {imagePosition === 'background' && renderImage()}
@@ -120,8 +123,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div 
           className={cn(
             "relative flex flex-col gap-12",
-            imagePosition === 'right' ? "lg:flex-row items-center" : 
-            imagePosition === 'left' ? "lg:flex-row-reverse items-center" : 
+            imagePosition === 'right' ? "lg:flex-row-reverse items-center" : // Reversed for RTL
+            imagePosition === 'left' ? "lg:flex-row items-center" : // Reversed for RTL
             "items-center"
           )}
         >
