@@ -97,10 +97,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           src={imageSrc} 
           alt="Hero" 
           className={cn(
-            "object-cover rounded-2xl animate-image-glow subtle-glow",
+            "object-contain rounded-2xl animate-image-glow subtle-glow",
             imagePosition === 'background' 
               ? "w-full h-full opacity-20" 
-              : "w-full h-auto max-h-[600px]"
+              : "w-full h-full lg:max-h-[600px] md:max-w-full"
           )}  
         />
       </div>
@@ -120,8 +120,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div 
           className={cn(
             "relative flex flex-col gap-12",
-            imagePosition === 'right' ? "lg:flex-row" : 
-            imagePosition === 'left' ? "lg:flex-row-reverse" : 
+            imagePosition === 'right' ? "lg:flex-row items-center" : 
+            imagePosition === 'left' ? "lg:flex-row-reverse items-center" : 
             "items-center"
           )}
         >

@@ -4,7 +4,6 @@ import { ArrowRight, Award, BarChart3, Users, Briefcase, Phone } from 'lucide-re
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import HeroSection from '@/components/HeroSection';
-import CardSection, { Card } from '@/components/CardSection';
 
 const Index = () => {
   return (
@@ -20,35 +19,6 @@ const Index = () => {
         secondaryButtonLink="/about"
         imagePosition="right"
       />
-
-      {/* Core Values Section */}
-      <CardSection
-        title="Our Core Values"
-        subtitle="What makes us different and why talented professionals choose to work with us"
-        centered={true}
-        className="bg-company-gray py-24"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card
-            title="Excellence"
-            description="We strive for excellence in everything we do, setting high standards and continuously improving our services."
-            icon={<Award size={28} />}
-            delay={100}
-          />
-          <Card
-            title="Innovation"
-            description="We embrace innovation, seeking creative solutions and staying ahead of industry trends and technologies."
-            icon={<BarChart3 size={28} />}
-            delay={300}
-          />
-          <Card
-            title="Teamwork"
-            description="We value collaboration and believe that diverse teams produce the best results for our clients and stakeholders."
-            icon={<Users size={28} />}
-            delay={500}
-          />
-        </div>
-      </CardSection>
 
       {/* Key Benefits Section */}
       <section className="section-container py-24">
