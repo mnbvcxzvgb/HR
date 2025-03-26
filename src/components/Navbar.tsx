@@ -21,15 +21,17 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled 
-          ? "bg-jerusalem/90 backdrop-blur-md shadow-lg py-3"
-          : "bg-jerusalem/70 py-5"
+          ? "bg-gradient-to-r from-black/90 to-gray-900/90 backdrop-blur-lg shadow-2xl py-2"
+          : "bg-gradient-to-r from-black/70 to-gray-900/70 backdrop-blur-sm py-4"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0 flex items-center">
-            <Target className="w-8 h-8 text-tactical mr-3" />
-            <span className="text-2xl font-bold text-tactical">טים אבטחה</span>
+            <div className="bg-white/10 p-2 rounded-full mr-3">
+              <Target className="w-8 h-8 text-white" />
+            </div>
+            <span className="text-2xl font-bold text-white">טים אבטחה</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -37,7 +39,7 @@ const Navbar = () => {
               href="https://wa.me/9720534873215" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-4 py-2 rounded shadow-md transition-all duration-300"
+              className="flex items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-4 py-2 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               dir="rtl"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-5 h-5 fill-current">
@@ -48,7 +50,7 @@ const Navbar = () => {
             
             <Button 
               asChild
-              className="tactical-btn"
+              className="bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-105"
               size="lg"
             >
               <a 
