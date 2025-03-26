@@ -186,3 +186,64 @@
     display: none !important;
   }
 }
+
+/* Accessibility Styles */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: white;
+  padding: 8px;
+  z-index: 9999;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.contrast-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #555;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  z-index: 1000;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.contrast-toggle:hover {
+  background: #333;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  filter: contrast(1.5);
+}
+
+.high-contrast body {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.high-contrast a {
+  color: #ffff00 !important;
+}
+
+.high-contrast button, 
+.high-contrast .button {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+/* Focus styles for keyboard navigation */
+.user-tabbing *:focus {
+  outline: 3px solid #4299e1 !important;
+  outline-offset: 3px !important;
+}

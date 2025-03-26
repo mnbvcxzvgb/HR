@@ -96,88 +96,46 @@ const Careers: React.FC = () => {
 
   const jobListings: JobListing[] = [
     {
-      id: 'education-security',
-      title: 'מאבטח מוסדות חינוך',
-      location: 'jerusalem',
-      salary: '63₪ לשעה',
-      jobType: 'full-time',
-      requirements: 'ללא',
-      companyType: 'regular',
-      badge: {
-        text: 'משרה מלאה',
-        color: 'green-500'
-      },
-      experienceLevel: 'no-experience'
-    },
-    {
       id: 'alon-unit',
-      title: 'לוחמים/ות לתפקידי אבטחה',
-      location: 'tel-aviv',
+      title: 'לוחמים/ות לתפקידי אבטחה משמעותיים',
+      location: 'jerusalem',
       salary: '55₪ לשעה',
-      jobType: 'shifts',
+      jobType: 'full-time',
       requirements: 'יוצאי קרבי',
       companyType: 'alon-unit',
       badge: {
         text: 'יחידת אלון',
-        color: 'blue-600'
+        color: 'blue-500'
       },
       experienceLevel: 'combat'
     },
     {
-      id: 'housing-unit',
-      title: 'לוחמים/ות ליחידה יוקרתית',
+      id: 'mount-olives',
+      title: 'דרושים לוחמים לרכס הר הזיתים',
       location: 'jerusalem',
       salary: '63₪ לשעה',
-      jobType: 'shifts',
+      jobType: 'full-time',
       requirements: 'רובאי 03 ומעלה',
       companyType: 'housing-ministry',
       badge: {
-        text: 'משרד השיכון',
+        text: 'רובאי 03',
         color: 'amber-500'
       },
       experienceLevel: 'combat'
     },
     {
-      id: 'event-security',
-      title: 'מאבטח אירועים',
-      location: 'tel-aviv',
-      salary: '68₪ לשעה',
-      jobType: 'part-time',
-      requirements: 'יתרון',
-      companyType: 'regular',
-      badge: {
-        text: 'משרה חלקית',
-        color: 'purple-500'
-      },
-      experienceLevel: 'entry-level'
-    },
-    {
-      id: 'hotel-security',
-      title: 'מאבטח מתקן מלונאי',
-      location: 'haifa',
-      salary: '59₪ לשעה',
+      id: 'old-city',
+      title: 'פרויקט האבטחה בעיר העתיקה',
+      location: 'jerusalem',
+      salary: '63₪ לשעה',
       jobType: 'full-time',
-      requirements: 'שנה ניסיון',
+      requirements: 'יתרון לבעלי ניסיון',
       companyType: 'regular',
       badge: {
-        text: 'משרה מלאה',
+        text: 'מגייס',
         color: 'green-500'
       },
-      experienceLevel: 'experienced'
-    },
-    {
-      id: 'armed-security',
-      title: 'אחמ״ש חמוש - מוקדים',
-      location: 'jerusalem',
-      salary: '75₪ לשעה',
-      jobType: 'shifts',
-      requirements: 'חובה',
-      companyType: 'regular',
-      badge: {
-        text: 'משמרות',
-        color: 'yellow-500'
-      },
-      experienceLevel: 'experienced'
+      experienceLevel: 'entry-level'
     }
   ];
 
@@ -242,30 +200,24 @@ const Careers: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>משרות אבטחה | יחידת אלון</title>
-        <meta name="description" content="משרות אבטחה איכותיות בירושלים ובכל הארץ. תנאים מעולים ושכר גבוה." />
+        <title>משרות אבטחה | Magen Staffing</title>
+        <meta name="description" content="משרות אבטחה איכותיות בירושלים מטעם Magen Staffing (מגן). מגוון תפקידים לבעלי רקע בטחוני עם תנאים מעולים ושכר גבוה." />
       </Helmet>
       
       <main className="bg-gray-50 min-h-screen pb-16" dir="rtl">
         {/* Header */}
-        <section className="relative bg-gradient-to-r from-blue-900 to-indigo-800 py-16 md:py-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-indigo-900/90 opacity-90"></div>
-          <div className="container mx-auto px-4 sm:px-6 relative z-10">
-            <Breadcrumbs
-              items={[{ label: 'משרות', href: '/careers' }]}
-              className="text-white/80 mb-6"
-            />
-            
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              משרות אבטחה
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl">
-              מצא את משרת האבטחה המושלמת עבורך עם תנאים מעולים ואפשרויות קידום
-            </p>
-          </div>
-        </section>
-
+        <HeroSection
+          title="משרות אבטחה בירושלים | Magen Staffing"
+          subtitle="התפקידים המובילים שלנו באבטחה לבעלי רקע בטחוני וללוחמים משוחררים"
+          imagePosition="none"
+        />
+        
         <div className="container mx-auto px-4 sm:px-6 pt-8">
+          <Breadcrumbs
+            items={[{ label: 'בית', href: '/' }, { label: 'משרות', href: '/careers' }]}
+            className="text-gray-600 mb-6"
+          />
+          
           {/* Filters and Results */}
           <div className="flex flex-col md:flex-row gap-6 -mt-8">
             {/* Filters Sidebar */}

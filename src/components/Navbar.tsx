@@ -20,9 +20,9 @@ const Navbar: React.FC = () => {
                 aria-label="דף הבית"
               >
                 <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-blue-900 font-bold text-xl">HR</span>
+                  <span className="text-blue-900 font-bold text-xl">מגן</span>
                 </div>
-                <span className="text-white font-bold text-xl hidden sm:block">אמישב HR</span>
+                <span className="text-white font-bold text-xl hidden sm:block">Magen Staffing</span>
               </Link>
               
               <div className="hidden md:block">

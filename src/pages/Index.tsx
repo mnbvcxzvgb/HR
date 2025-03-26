@@ -11,6 +11,7 @@ const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isJobDetailsOpen, setIsJobDetailsOpen] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState('');
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleShowJobDetails = (jobId: string) => {
     setSelectedJobId(jobId);
@@ -19,6 +20,15 @@ const Index = () => {
 
   const handleApply = () => {
     setIsModalOpen(true);
+  };
+
+  const handleEmployerFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real application, we would send the form data to a server
+    setFormSubmitted(true);
+    setTimeout(() => {
+      setFormSubmitted(false);
+    }, 5000);
   };
 
   const featuredJobs = [
@@ -134,22 +144,69 @@ const Index = () => {
         <section className="py-16 sm:py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">למה דווקא אנחנו?</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">פלטפורמה מקצועית למעסיקים ודורשי עבודה</h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                אנו מספקים את התנאים הטובים ביותר לעובדים שלנו, ומאמינים בפיתוח ארוך טווח של כל עובד
+                מגן Staffing מחברת בין מעסיקים איכותיים לבין כוח אדם מקצועי בתחום האבטחה
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-lg">
-                <iframe 
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                  title="YouTube video player" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                  className="object-cover"
-                ></iframe>
+              <div className="rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 border border-gray-200 p-6">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">למעסיקים בתחום האבטחה</h3>
+                  <p className="text-gray-600 mb-6">מעוניינים לפרסם משרות אבטחה באתר שלנו? אנו מתמחים בגיוס אנשי אבטחה מקצועיים</p>
+                </div>
+                
+                {formSubmitted ? (
+                  <div className="bg-green-50 text-green-800 rounded-md p-4 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <p className="font-medium">הטופס נשלח בהצלחה!</p>
+                    <p className="text-sm mt-1">ניצור איתך קשר בהקדם.</p>
+                  </div>
+                ) : (
+                  <form className="space-y-4" onSubmit={handleEmployerFormSubmit}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">שם החברה</label>
+                        <input type="text" id="company" name="company" required className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white px-3 py-2 text-right" />
+                      </div>
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">שם איש קשר</label>
+                        <input type="text" id="name" name="name" required className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white px-3 py-2 text-right" />
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">אימייל</label>
+                      <input type="email" id="email" name="email" required className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white px-3 py-2 text-right" />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">טלפון</label>
+                      <input type="tel" id="phone" name="phone" required className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white px-3 py-2 text-right" />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">פרטי המשרה</label>
+                      <textarea id="message" name="message" rows={3} required className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white px-3 py-2 text-right"></textarea>
+                    </div>
+                    <div className="pt-2">
+                      <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md font-medium shadow-sm transition-colors flex items-center justify-center">
+                        <span>שליחה</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-500 text-center mt-4">
+                      המידע שהוזן לא יועבר לצד שלישי ויישמר בהתאם למדיניות הפרטיות שלנו
+                    </p>
+                  </form>
+                )}
               </div>
               
               <div className="space-y-6">

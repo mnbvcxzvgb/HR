@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="he-IL">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Magen Staffing | Security Personnel Services</title>
+    <meta name="description" content="Magen Staffing (מגן) provides professional security personnel services in Jerusalem and throughout Israel. Specialized in security staffing and recruitment." />
+    <meta name="keywords" content="Magen Staffing, security jobs, security personnel, מגן, security staffing, Jerusalem security, security recruitment, security guard jobs" />
+    <link rel="stylesheet" href="/src/index.css" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <!-- Main Content -->
+    <div id="root"></div>
+
+    <!-- Accessibility Enhancements -->
+    <script>
+      (function () {
+        document.addEventListener("DOMContentLoaded", function () {
+          // Keyboard Navigation Enhancement
+          document.addEventListener("keydown", function (event) {
+            if (event.key === "Tab") {
+              document.body.classList.add("user-tabbing");
+            }
+          });
+          document.addEventListener("mousedown", function () {
+            document.body.classList.remove("user-tabbing");
+          });
+
+          // Add Skip to Content Link
+          let skipLink = document.createElement("a");
+          skipLink.href = "#main-content";
+          skipLink.className = "skip-link";
+          skipLink.innerText = "דלג לתוכן העיקרי";
+          document.body.prepend(skipLink);
+
+          // High Contrast Mode Toggle
+          let contrastToggle = document.createElement("button");
+          contrastToggle.innerText = "מצב ניגודיות גבוהה";
+          contrastToggle.className = "contrast-toggle";
+          contrastToggle.addEventListener("click", function () {
+            document.body.classList.toggle("high-contrast");
+          });
+          document.body.prepend(contrastToggle);
+        });
+      })();
+    </script>
+  </body>
+</html> 
