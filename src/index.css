@@ -1,5 +1,5 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,44 +7,44 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 46 33% 93%;
+    --foreground: 145 22% 20%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 46 33% 93%;
+    --card-foreground: 145 22% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 46 33% 93%;
+    --popover-foreground: 145 22% 20%;
 
-    --primary: 221 83% 15%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 145 22% 20%;
+    --primary-foreground: 46 33% 93%;
 
-    --secondary: 195 100% 45%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 82 60% 35%;
+    --secondary-foreground: 46 33% 93%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 49 40% 75%;
+    --muted-foreground: 145 22% 29%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 49 40% 85%;
+    --accent-foreground: 145 22% 20%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 46 33% 93%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221 83% 15%;
+    --border: 49 40% 75%;
+    --input: 49 40% 75%;
+    --ring: 145 22% 20%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 46 33% 93%;
+    --sidebar-foreground: 145 22% 20%;
+    --sidebar-primary: 145 22% 20%;
+    --sidebar-primary-foreground: 46 33% 93%;
+    --sidebar-accent: 49 40% 75%;
+    --sidebar-accent-foreground: 145 22% 20%;
+    --sidebar-border: 49 40% 75%;
+    --sidebar-ring: 82 60% 35%;
   }
 
   .dark {
@@ -92,13 +92,18 @@
   }
 
   html {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Rubik', 'Inter', system-ui, sans-serif;
     scroll-behavior: smooth;
   }
 
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: url('/tactical-bg.png');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -106,11 +111,11 @@
   }
 
   .glass-card {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+    @apply bg-jerusalem-light/80 backdrop-blur-md border border-jerusalem-dark/30 shadow-lg;
   }
 
   .subtle-glow {
-    box-shadow: 0 0 20px rgba(0, 160, 228, 0.15);
+    box-shadow: 0 0 20px rgba(45, 71, 57, 0.25);
   }
 
   .page-container {
@@ -123,5 +128,61 @@
 
   .button-hover-effect {
     @apply transition-all duration-300 ease-in-out transform hover:scale-105;
+  }
+
+  .tactical-btn {
+    @apply bg-tactical hover:bg-tactical-accent text-jerusalem-light font-bold py-3 px-8 rounded shadow-md transition-all duration-300;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tactical-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  
+  .tactical-btn:hover::after {
+    transform: translateX(100%);
+  }
+
+  .jerusalem-card {
+    @apply bg-jerusalem-light/90 border border-jerusalem-dark/20 rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300;
+  }
+
+  .floating-whatsapp {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 999;
+    animation: pulse 2s infinite;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .floating-whatsapp a {
+    @apply flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white p-4 rounded-full shadow-lg transition-all duration-300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+  
+  /* Hide footer throughout the site */
+  footer {
+    display: none !important;
   }
 }

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, Check, Briefcase, Clock, MapPin, GraduationCap, Users, Heart, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -347,10 +346,12 @@ const Careers = () => {
               size="lg" 
               className="border-white text-white hover:bg-white hover:text-company-blue button-hover-effect"
             >
-              <a href="tel:0534873215" className="flex items-center">
-                <Phone size={16} className="mr-2" />
-                Call Us: 0534873215
-              </a>
+              <div className="flex items-center gap-4 justify-center">
+                <Phone size={24} className="text-company-lightblue" />
+                <a href="tel:+972525480061" className="flex items-center">
+                  <span className="text-xl">התקשר אלינו: 052-548-0061</span>
+                </a>
+              </div>
             </Button>
           </div>
         </div>

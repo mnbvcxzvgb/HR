@@ -1,18 +1,11 @@
-
 import React, { useEffect } from 'react';
-import { ArrowRight, Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { ChevronRight, Phone } from 'lucide-react';
 
 interface HeroSectionProps {
   title: string;
   subtitle: string;
   imageSrc?: string;
-  primaryButtonText?: string;
-  primaryButtonLink?: string;
-  secondaryButtonText?: string;
-  secondaryButtonLink?: string;
   imagePosition?: 'left' | 'right' | 'background' | 'none';
   className?: string;
 }
@@ -21,10 +14,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   title,
   subtitle,
   imageSrc,
-  primaryButtonText,
-  primaryButtonLink = '/',
-  secondaryButtonText,
-  secondaryButtonLink = '/',
   imagePosition = 'right',
   className
 }) => {
@@ -37,78 +26,27 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     });
   }, []);
 
-  const renderContent = () => (
-    <div className={cn(
-      "z-10 space-y-6 max-w-xl text-right", 
-      imagePosition === 'right' ? "text-right" : imagePosition === 'left' ? "text-right lg:text-left" : "text-center mx-auto"
-    )}>
-      <h1 
-        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight animate-on-load opacity-0 translate-y-4 transition-all duration-700 text-white drop-shadow-md"
-        dir="rtl"
-      >
-        {title}
-      </h1>
-      <p 
-        className="text-xl md:text-2xl text-white animate-on-load opacity-0 translate-y-4 transition-all duration-700 font-medium drop-shadow-md"
-        dir="rtl"
-      >
-        {subtitle}
-      </p>
-      <div 
-        className={cn(
-          "flex items-center gap-4 pt-4 animate-on-load opacity-0 translate-y-4 transition-all duration-700 flex-row-reverse",
-          imagePosition === 'background' || imagePosition === 'none' ? "justify-center" : ""
-        )}
-      >
-        {primaryButtonText && (
-          <Button 
-            asChild
-            size="lg" 
-            className="bg-company-lightblue hover:bg-company-blue text-white button-hover-effect text-lg"
-          >
-            <Link to={primaryButtonLink} dir="rtl">
-              <ArrowRight size={16} className="mr-2 rotate-180" /> {primaryButtonText}
-            </Link>
-          </Button>
-        )}
-        {secondaryButtonText && (
-          <Button 
-            asChild
-            variant="outline" 
-            size="lg" 
-            className="bg-white/20 backdrop-blur-sm border-white text-white hover:bg-white hover:text-company-blue button-hover-effect text-lg"
-          >
-            <Link to={secondaryButtonLink} dir="rtl">
-              {secondaryButtonText}
-            </Link>
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-
   const renderImage = () => (
     imageSrc && (
       <div 
         className={cn(
-          "relative animate-fade-in",
-          imagePosition === 'background' ? "absolute inset-0 z-0" : "z-10 flex-1"
+          "relative w-full h-full",
+          imagePosition === 'background' ? "absolute inset-0" : "flex-1"
         )}
       >
-        <img 
-          src={imageSrc} 
-          alt="Hero" 
-          className={cn(
-            "object-contain w-full h-full rounded-lg",
-            imagePosition === 'background' 
-              ? "w-full h-full" 
-              : "w-full h-auto max-h-[80vh]"
-          )}  
-        />
-        <div className={cn(
-          imagePosition !== 'background' && "absolute inset-0 bg-gradient-to-r from-company-blue/70 to-transparent z-[-1]",
-          imagePosition === 'background' && "absolute inset-0 bg-company-blue/50 z-[-1]"
-        )}></div>
+        <div className="relative h-full overflow-hidden rounded-lg border-2 border-tactical/30">
+          <div className="absolute inset-0 bg-gradient-to-r from-tactical/40 to-transparent z-10"></div>
+          <img 
+            src={imageSrc} 
+            alt="משרות אבטחה בירושלים - הצטרפו לצוות המוביל"
+            loading="eager"
+            decoding="async"
+            className={cn(
+              "w-full h-full object-cover",
+              imagePosition === 'background' ? "opacity-70" : ""
+            )}
+          />
+        </div>
       </div>
     )
   );
@@ -116,25 +54,55 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section 
       className={cn(
-        "relative overflow-hidden pt-28 pb-16 md:py-32 rtl bg-company-blue/5",
+        "relative min-h-[90vh] flex items-center bg-jerusalem-light overflow-hidden",
         className
       )}
       dir="rtl"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
-        {imagePosition === 'background' && renderImage()}
-        
+      <div className="absolute inset-0 bg-[url('/tactical-pattern.png')] opacity-10"></div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 lg:py-32">
         <div 
           className={cn(
-            "relative flex flex-col gap-12",
-            imagePosition === 'right' ? "lg:flex-row-reverse items-center" :
-            imagePosition === 'left' ? "lg:flex-row items-center" :
-            "items-center"
+            "relative flex flex-col lg:flex-row items-center gap-12 lg:gap-24",
+            imagePosition === 'right' ? "lg:flex-row-reverse" : ""
           )}
         >
-          {imagePosition === 'left' && renderImage()}
-          {renderContent()}
-          {imagePosition === 'right' && renderImage()}
+          <div className="flex-1 text-center lg:text-right z-10">
+            <div className="max-w-2xl lg:max-w-none mx-auto lg:mx-0 bg-jerusalem/70 p-8 rounded-lg backdrop-blur-sm border border-tactical/20 shadow-lg">
+              <h1 
+                className="text-4xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-8 animate-on-load opacity-0 translate-y-4 transition-all duration-700 text-tactical"
+                dir="rtl"
+              >
+                {title}
+              </h1>
+              <p 
+                className="text-xl lg:text-2xl text-tactical-foreground animate-on-load opacity-0 translate-y-4 transition-all duration-700"
+                dir="rtl"
+              >
+                {subtitle}
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
+                <a href="tel:+9720534873215" className="tactical-btn inline-flex items-center gap-3">
+                  <Phone className="w-5 h-5" />
+                  <span>התקשר עכשיו</span>
+                </a>
+                <a 
+                  href="https://wa.me/9720534873215" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="tactical-btn inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#128C7E]"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-5 h-5 fill-current">
+                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                  </svg>
+                  <span>פתיחת WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {imagePosition !== 'none' && renderImage()}
         </div>
       </div>
     </section>

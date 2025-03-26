@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, Shield, Lock, FileCheck, Users, Eye, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';

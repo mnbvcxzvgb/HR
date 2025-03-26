@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -81,9 +80,12 @@ const Contact = () => {
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Phone</h3>
                   <p className="text-gray-600 mb-1">Call us directly:</p>
-                  <a href="tel:0534873215" className="text-company-lightblue font-medium text-lg hover:underline">
-                    0534873215
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <Phone size={20} className="text-company-lightblue" />
+                    <a href="tel:+972525480061" className="text-company-lightblue font-medium text-lg hover:underline">
+                      052-548-0061
+                    </a>
+                  </div>
                 </div>
               </div>
               

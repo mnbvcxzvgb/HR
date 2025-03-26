@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -68,6 +67,16 @@ export default {
 					lightblue: '#00A0E4',
 					gray: '#F6F9FC',
 					darkgray: '#4A5568'
+				},
+				jerusalem: {
+					DEFAULT: "#F5F1E3",
+					dark: "#D9CEA6",
+					light: "#F9F2E5"
+				},
+				tactical: {
+					DEFAULT: "#2D4739",
+					accent: "#6B8E23",
+					foreground: "#393E46"
 				}
 			},
 			borderRadius: {

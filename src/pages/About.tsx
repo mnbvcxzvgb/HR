@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, Check, Award, Target, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
