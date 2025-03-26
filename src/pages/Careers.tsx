@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import { ArrowRight, Check, Briefcase, Clock, MapPin, GraduationCap, Users, Heart, Phone } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight, Check, Briefcase, Clock, MapPin, GraduationCap, Users, Heart, Phone, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import HeroSection from '@/components/HeroSection';
 import CardSection, { Card } from '@/components/CardSection';
 import { useToast } from "@/hooks/use-toast";
+import Breadcrumbs from '@/components/Breadcrumbs';
+import FilterBar from '@/components/FilterBar';
+import WhatsAppChatModal from '@/components/WhatsAppChatModal';
+import JobDetailsModal from '@/components/JobDetailsModal';
+import { Helmet } from 'react-helmet-async';
 
 interface JobPosition {
   id: number;
@@ -15,10 +20,35 @@ interface JobPosition {
   requirements: string[];
 }
 
-const Careers = () => {
+interface JobListing {
+  id: string;
+  title: string;
+  location: string;
+  salary: string;
+  jobType: string;
+  requirements: string;
+  companyType: string;
+  badge: {
+    text: string;
+    color: string;
+  };
+  experienceLevel: string;
+}
+
+const Careers: React.FC = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("jobs");
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isJobDetailsOpen, setIsJobDetailsOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [filteredJobs, setFilteredJobs] = useState<JobListing[]>([]);
+  const [filters, setFilters] = useState({
+    locations: [] as string[],
+    jobTypes: [] as string[],
+    experienceLevel: [] as string[]
+  });
+
   const jobPositions: JobPosition[] = [
     {
       id: 1,
@@ -64,6 +94,93 @@ const Careers = () => {
     }
   ];
 
+  const jobListings: JobListing[] = [
+    {
+      id: 'education-security',
+      title: 'מאבטח מוסדות חינוך',
+      location: 'jerusalem',
+      salary: '63₪ לשעה',
+      jobType: 'full-time',
+      requirements: 'ללא',
+      companyType: 'regular',
+      badge: {
+        text: 'משרה מלאה',
+        color: 'green-500'
+      },
+      experienceLevel: 'no-experience'
+    },
+    {
+      id: 'alon-unit',
+      title: 'לוחמים/ות לתפקידי אבטחה',
+      location: 'tel-aviv',
+      salary: '55₪ לשעה',
+      jobType: 'shifts',
+      requirements: 'יוצאי קרבי',
+      companyType: 'alon-unit',
+      badge: {
+        text: 'יחידת אלון',
+        color: 'blue-600'
+      },
+      experienceLevel: 'combat'
+    },
+    {
+      id: 'housing-unit',
+      title: 'לוחמים/ות ליחידה יוקרתית',
+      location: 'jerusalem',
+      salary: '63₪ לשעה',
+      jobType: 'shifts',
+      requirements: 'רובאי 03 ומעלה',
+      companyType: 'housing-ministry',
+      badge: {
+        text: 'משרד השיכון',
+        color: 'amber-500'
+      },
+      experienceLevel: 'combat'
+    },
+    {
+      id: 'event-security',
+      title: 'מאבטח אירועים',
+      location: 'tel-aviv',
+      salary: '68₪ לשעה',
+      jobType: 'part-time',
+      requirements: 'יתרון',
+      companyType: 'regular',
+      badge: {
+        text: 'משרה חלקית',
+        color: 'purple-500'
+      },
+      experienceLevel: 'entry-level'
+    },
+    {
+      id: 'hotel-security',
+      title: 'מאבטח מתקן מלונאי',
+      location: 'haifa',
+      salary: '59₪ לשעה',
+      jobType: 'full-time',
+      requirements: 'שנה ניסיון',
+      companyType: 'regular',
+      badge: {
+        text: 'משרה מלאה',
+        color: 'green-500'
+      },
+      experienceLevel: 'experienced'
+    },
+    {
+      id: 'armed-security',
+      title: 'אחמ״ש חמוש - מוקדים',
+      location: 'jerusalem',
+      salary: '75₪ לשעה',
+      jobType: 'shifts',
+      requirements: 'חובה',
+      companyType: 'regular',
+      badge: {
+        text: 'משמרות',
+        color: 'yellow-500'
+      },
+      experienceLevel: 'experienced'
+    }
+  ];
+
   const handleApplyNow = (jobId: number) => {
     toast({
       title: "Application Started",
@@ -71,292 +188,251 @@ const Careers = () => {
     });
   };
 
+  const handleShowJobDetails = (jobId: string) => {
+    setSelectedJobId(jobId);
+    setIsJobDetailsOpen(true);
+  };
+
+  const handleFilterChange = (newFilters: typeof filters) => {
+    setFilters(newFilters);
+  };
+
+  // Filter jobs based on selected filters
+  useEffect(() => {
+    setLoading(true);
+    
+    // Simulate API loading
+    const timer = setTimeout(() => {
+      let results = [...jobListings];
+      
+      // Apply location filter
+      if (filters.locations.length > 0) {
+        results = results.filter(job => filters.locations.includes(job.location));
+      }
+      
+      // Apply job type filter
+      if (filters.jobTypes.length > 0) {
+        results = results.filter(job => filters.jobTypes.includes(job.jobType));
+      }
+      
+      // Apply experience level filter
+      if (filters.experienceLevel.length > 0) {
+        results = results.filter(job => filters.experienceLevel.includes(job.experienceLevel));
+      }
+      
+      setFilteredJobs(results);
+      setLoading(false);
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [filters]);
+
+  // Initialize with all jobs
+  useEffect(() => {
+    setFilteredJobs(jobListings);
+    
+    // Simulate initial loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <main className="pt-16">
-      {/* Hero Section */}
-      <HeroSection
-        title="Join Our Team"
-        subtitle="Discover rewarding career opportunities with competitive compensation, flexible scheduling, and a supportive work environment."
-        imageSrc="/lovable-uploads/209496a9-2428-4907-a4a3-e4798c5fa59b.png"  
-        primaryButtonText="View Open Positions"
-        primaryButtonLink="#jobs"
-        secondaryButtonText="Employee Benefits"
-        secondaryButtonLink="#benefits"
-        imagePosition="left"
-      />
-
-      {/* Tabs Navigation */}
-      <div className="bg-company-gray py-6 sticky top-16 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex overflow-x-auto space-x-8 pb-2">
-            <a
-              href="#jobs"
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveTab("jobs");
-              }}
-              className={`whitespace-nowrap px-3 py-2 font-medium text-sm rounded-md transition-colors ${
-                activeTab === "jobs"
-                  ? "bg-company-lightblue text-white"
-                  : "text-gray-600 hover:text-company-lightblue"
-              }`}
-            >
-              Open Positions
-            </a>
-            <a
-              href="#benefits"
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveTab("benefits");
-              }}
-              className={`whitespace-nowrap px-3 py-2 font-medium text-sm rounded-md transition-colors ${
-                activeTab === "benefits"
-                  ? "bg-company-lightblue text-white"
-                  : "text-gray-600 hover:text-company-lightblue"
-              }`}
-            >
-              Benefits & Culture
-            </a>
-            <a
-              href="#application"
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveTab("application");
-              }}
-              className={`whitespace-nowrap px-3 py-2 font-medium text-sm rounded-md transition-colors ${
-                activeTab === "application"
-                  ? "bg-company-lightblue text-white"
-                  : "text-gray-600 hover:text-company-lightblue"
-              }`}
-            >
-              Application Process
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Job Listings */}
-      <section id="jobs" className={`section-container py-16 ${activeTab !== "jobs" ? "hidden" : ""}`}>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Current Openings</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Explore our available positions and find the perfect opportunity to match your skills and career goals.
-          </p>
-        </div>
-        
-        <div className="space-y-8">
-          {jobPositions.map((job) => (
-            <div key={job.id} className="glass-card p-6 rounded-xl hover:shadow-xl transition-all duration-300">
-              <div className="flex flex-col md:flex-row md:items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold text-company-blue">{job.title}</h3>
-                  <div className="flex flex-wrap gap-3 mt-2">
-                    <span className="inline-flex items-center text-sm text-gray-600">
-                      <MapPin size={16} className="mr-1" /> {job.location}
-                    </span>
-                    <span className="inline-flex items-center text-sm text-gray-600">
-                      <Clock size={16} className="mr-1" /> {job.type}
-                    </span>
-                  </div>
-                </div>
-                <Button 
-                  className="mt-4 md:mt-0 bg-company-lightblue hover:bg-company-blue text-white button-hover-effect"
-                  onClick={() => handleApplyNow(job.id)}
-                >
-                  Apply Now <ArrowRight size={16} className="ml-1" />
-                </Button>
-              </div>
-              
-              <div className="mt-4">
-                <p className="text-gray-600 mb-4">{job.description}</p>
-                <h4 className="font-semibold text-company-blue mb-2">Requirements:</h4>
-                <ul className="space-y-1">
-                  {job.requirements.map((req, index) => (
-                    <li key={index} className="flex items-start">
-                      <Check size={16} className="text-company-lightblue mr-2 mt-1 flex-shrink-0" />
-                      <span>{req}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Benefits & Culture */}
-      <section id="benefits" className={`bg-company-gray py-20 ${activeTab !== "benefits" ? "hidden" : ""}`}>
-        <div className="section-container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Benefits & Culture</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We believe in taking care of our team members with comprehensive benefits and a positive, supportive work environment.
+    <>
+      <Helmet>
+        <title>משרות אבטחה | יחידת אלון</title>
+        <meta name="description" content="משרות אבטחה איכותיות בירושלים ובכל הארץ. תנאים מעולים ושכר גבוה." />
+      </Helmet>
+      
+      <main className="bg-gray-50 min-h-screen pb-16" dir="rtl">
+        {/* Header */}
+        <section className="relative bg-gradient-to-r from-blue-900 to-indigo-800 py-16 md:py-20">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-indigo-900/90 opacity-90"></div>
+          <div className="container mx-auto px-4 sm:px-6 relative z-10">
+            <Breadcrumbs
+              items={[{ label: 'משרות', href: '/careers' }]}
+              className="text-white/80 mb-6"
+            />
+            
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+              משרות אבטחה
+            </h1>
+            <p className="text-xl text-white/90 max-w-3xl">
+              מצא את משרת האבטחה המושלמת עבורך עם תנאים מעולים ואפשרויות קידום
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <Card
-              title="Competitive Compensation"
-              description="We offer a competitive salary of 63 ILS/hour (gross) to value your skills and contribution to our team."
-              icon={<Briefcase size={28} />}
-              delay={100}
-            />
-            <Card
-              title="Flexible Schedules"
-              description="Our flexible working arrangements are ideal for students and those balancing other commitments."
-              icon={<Clock size={28} />}
-              delay={300}
-            />
-            <Card
-              title="Growth Opportunities"
-              description="We provide training and clear pathways for advancement within our organization."
-              icon={<GraduationCap size={28} />}
-              delay={500}
-            />
-          </div>
-          
-          <div className="bg-white rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold mb-6 text-center">Our Company Culture</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div>
-                <img 
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" 
-                  alt="Team collaboration" 
-                  className="rounded-xl shadow-md mb-6 h-64 w-full object-cover"
-                />
-                <h4 className="text-xl font-semibold mb-3 flex items-center">
-                  <Users size={20} className="text-company-lightblue mr-2" />
-                  Collaborative Environment
-                </h4>
-                <p className="text-gray-600">
-                  We foster a collaborative atmosphere where team members support each other and work together to achieve common goals. Our open communication policy ensures that everyone's voice is heard and valued.
-                </p>
-              </div>
-              <div>
-                <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" 
-                  alt="Work-life balance" 
-                  className="rounded-xl shadow-md mb-6 h-64 w-full object-cover"
-                />
-                <h4 className="text-xl font-semibold mb-3 flex items-center">
-                  <Heart size={20} className="text-company-lightblue mr-2" />
-                  Work-Life Balance
-                </h4>
-                <p className="text-gray-600">
-                  We understand the importance of balance. Our flexible schedules and supportive management help team members maintain a healthy work-life balance while still delivering exceptional service to our clients.
-                </p>
+        </section>
+
+        <div className="container mx-auto px-4 sm:px-6 pt-8">
+          {/* Filters and Results */}
+          <div className="flex flex-col md:flex-row gap-6 -mt-8">
+            {/* Filters Sidebar */}
+            <div className="md:w-1/4 z-20">
+              <div className="sticky top-[5.5rem]">
+                <FilterBar onFilterChange={handleFilterChange} />
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Application Process */}
-      <section id="application" className={`section-container py-20 ${activeTab !== "application" ? "hidden" : ""}`}>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">How to Apply</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Our application process is straightforward and designed to help us find the right fit for our team.
-          </p>
-        </div>
-        
-        <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-company-lightblue/30 transform -translate-x-1/2"></div>
             
-            {/* Timeline items */}
-            <div className="space-y-12">
-              <div className="relative flex flex-col md:flex-row items-center md:items-start gap-8">
-                <div className="order-1 md:w-1/2 md:text-right md:pr-10">
-                  <h3 className="text-xl font-semibold mb-2 text-company-blue">1. Apply Online</h3>
-                  <p className="text-gray-600">
-                    Submit your application through our careers page or visit our contact page to send your resume and cover letter.
-                  </p>
+            {/* Job Listings */}
+            <div className="md:w-3/4">
+              {/* Applied Filters Summary */}
+              {(filters.locations.length > 0 || filters.jobTypes.length > 0 || filters.experienceLevel.length > 0) && (
+                <div className="bg-white p-4 rounded-lg shadow-sm mb-6 border border-gray-200">
+                  <div className="flex flex-wrap gap-2 items-center">
+                    <span className="text-gray-700 font-medium">סינון לפי:</span>
+                    
+                    {filters.locations.length > 0 && (
+                      <div className="px-3 py-1 rounded-md text-sm font-medium bg-blue-100 text-blue-700 border border-blue-200">
+                        {filters.locations.length === 1 ? 'מיקום אחד' : `${filters.locations.length} מיקומים`}
+                      </div>
+                    )}
+                    
+                    {filters.jobTypes.length > 0 && (
+                      <div className="px-3 py-1 rounded-md text-sm font-medium bg-purple-100 text-purple-700 border border-purple-200">
+                        {filters.jobTypes.length === 1 ? 'סוג משרה אחד' : `${filters.jobTypes.length} סוגי משרה`}
+                      </div>
+                    )}
+                    
+                    {filters.experienceLevel.length > 0 && (
+                      <div className="px-3 py-1 rounded-md text-sm font-medium bg-amber-100 text-amber-700 border border-amber-200">
+                        {filters.experienceLevel.length === 1 ? 'רמת ניסיון אחת' : `${filters.experienceLevel.length} רמות ניסיון`}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="absolute left-0 md:left-1/2 flex items-center justify-center w-16 h-16 bg-company-lightblue rounded-full transform -translate-x-1/2 text-white font-bold text-xl z-10">
-                  1
-                </div>
-                <div className="order-2 md:w-1/2 md:pl-10 invisible md:visible"></div>
+              )}
+              
+              {/* Results Count */}
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-gray-800">
+                  {loading ? 'טוען משרות...' : `${filteredJobs.length} משרות נמצאו`}
+                </h2>
               </div>
               
-              <div className="relative flex flex-col md:flex-row items-center md:items-start gap-8">
-                <div className="order-2 md:order-1 md:w-1/2 md:text-right md:pr-10 invisible md:visible"></div>
-                <div className="absolute left-0 md:left-1/2 flex items-center justify-center w-16 h-16 bg-company-lightblue rounded-full transform -translate-x-1/2 text-white font-bold text-xl z-10">
-                  2
+              {/* Loading State */}
+              {loading ? (
+                <div className="grid grid-cols-1 gap-6 animate-pulse">
+                  {[1, 2, 3].map(n => (
+                    <div key={n} className="bg-white rounded-lg shadow-md h-64"></div>
+                  ))}
                 </div>
-                <div className="order-1 md:order-2 md:w-1/2 md:pl-10">
-                  <h3 className="text-xl font-semibold mb-2 text-company-blue">2. Initial Screening</h3>
-                  <p className="text-gray-600">
-                    Our hiring team will review your application and contact qualified candidates for an initial phone screening.
-                  </p>
+              ) : filteredJobs.length === 0 ? (
+                // Empty State
+                <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                  <div className="flex justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">לא נמצאו משרות</h3>
+                  <p className="text-gray-600 mb-6">נסה לשנות את פרמטרי החיפוש שלך או לבטל חלק מהסינונים</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleFilterChange({ locations: [], jobTypes: [], experienceLevel: [] })}
+                    className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                  >
+                    נקה את כל הסינונים
+                  </Button>
                 </div>
-              </div>
-              
-              <div className="relative flex flex-col md:flex-row items-center md:items-start gap-8">
-                <div className="order-1 md:w-1/2 md:text-right md:pr-10">
-                  <h3 className="text-xl font-semibold mb-2 text-company-blue">3. Interview</h3>
-                  <p className="text-gray-600">
-                    Selected candidates will be invited for an in-person or virtual interview to discuss qualifications and expectations in detail.
-                  </p>
+              ) : (
+                // Results List
+                <div className="grid grid-cols-1 gap-6">
+                  {filteredJobs.map(job => (
+                    <div 
+                      key={job.id}
+                      className="group bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-shadow hover:shadow-lg"
+                    >
+                      <div className="p-6">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                          <div>
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium bg-${job.badge.color} text-white mb-2`}>
+                              {job.badge.text}
+                            </span>
+                            <h3 className="text-xl font-bold text-gray-800">{job.title}</h3>
+                          </div>
+                          <div className="mt-2 md:mt-0">
+                            <span className="text-lg font-bold text-blue-600">{job.salary}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                          <div className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span className="text-gray-700">
+                              {job.location === 'jerusalem' ? 'ירושלים' : 
+                               job.location === 'tel-aviv' ? 'תל אביב' : 
+                               job.location === 'haifa' ? 'חיפה' : 
+                               job.location === 'beer-sheva' ? 'באר שבע' : job.location}
+                            </span>
+                          </div>
+                          
+                          <div className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span className="text-gray-700">
+                              {job.jobType === 'full-time' ? 'משרה מלאה' : 
+                               job.jobType === 'part-time' ? 'משרה חלקית' : 
+                               job.jobType === 'shifts' ? 'משמרות' : job.jobType}
+                            </span>
+                          </div>
+                          
+                          <div className="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span className="text-gray-700">
+                              ניסיון נדרש: {job.requirements}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-col sm:flex-row gap-3">
+                          <Button
+                            onClick={() => handleShowJobDetails(job.id)}
+                            variant="outline"
+                            className="flex-1 border-gray-300 hover:bg-gray-50 text-gray-700"
+                          >
+                            <span className="flex items-center justify-center gap-2">
+                              <Info className="w-4 h-4" />
+                              פרטים נוספים
+                            </span>
+                          </Button>
+                          
+                          <Button
+                            onClick={() => setIsModalOpen(true)}
+                            className="flex-1 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white"
+                          >
+                            <span className="flex items-center justify-center gap-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-4 h-4 fill-current">
+                                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6z"/>
+                              </svg>
+                              שלח הודעה
+                            </span>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="absolute left-0 md:left-1/2 flex items-center justify-center w-16 h-16 bg-company-lightblue rounded-full transform -translate-x-1/2 text-white font-bold text-xl z-10">
-                  3
-                </div>
-                <div className="order-2 md:w-1/2 md:pl-10 invisible md:visible"></div>
-              </div>
-              
-              <div className="relative flex flex-col md:flex-row items-center md:items-start gap-8">
-                <div className="order-2 md:order-1 md:w-1/2 md:text-right md:pr-10 invisible md:visible"></div>
-                <div className="absolute left-0 md:left-1/2 flex items-center justify-center w-16 h-16 bg-company-lightblue rounded-full transform -translate-x-1/2 text-white font-bold text-xl z-10">
-                  4
-                </div>
-                <div className="order-1 md:order-2 md:w-1/2 md:pl-10">
-                  <h3 className="text-xl font-semibold mb-2 text-company-blue">4. Job Offer</h3>
-                  <p className="text-gray-600">
-                    Successful candidates will receive a job offer outlining compensation, benefits, and start date details.
-                  </p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-company-blue text-white py-20">
-        <div className="section-container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Apply?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Take the first step toward joining our team today. We look forward to learning more about you!
-          </p>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-            <Button 
-              asChild
-              size="lg" 
-              className="bg-white text-company-blue hover:bg-company-lightblue hover:text-white button-hover-effect"
-            >
-              <Link to="/contact">
-                Apply Now <ArrowRight size={16} className="ml-2" />
-              </Link>
-            </Button>
-            <Button 
-              asChild
-              variant="outline" 
-              size="lg" 
-              className="border-white text-white hover:bg-white hover:text-company-blue button-hover-effect"
-            >
-              <div className="flex items-center gap-4 justify-center">
-                <Phone size={24} className="text-company-lightblue" />
-                <a href="tel:+972525480061" className="flex items-center">
-                  <span className="text-xl">התקשר אלינו: 052-548-0061</span>
-                </a>
-              </div>
-            </Button>
-          </div>
-        </div>
-      </section>
-    </main>
+      </main>
+      
+      <WhatsAppChatModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <JobDetailsModal 
+        isOpen={isJobDetailsOpen} 
+        onClose={() => setIsJobDetailsOpen(false)} 
+        jobId={selectedJobId} 
+      />
+    </>
   );
 };
 

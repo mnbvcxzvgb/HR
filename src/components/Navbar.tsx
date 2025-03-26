@@ -1,71 +1,196 @@
-import React, { useEffect, useState } from 'react';
-import { Phone, Target } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
-const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      setScrolled(offset > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav 
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled 
-          ? "bg-gradient-to-r from-black/90 to-gray-900/90 backdrop-blur-lg shadow-2xl py-2"
-          : "bg-gradient-to-r from-black/70 to-gray-900/70 backdrop-blur-sm py-4"
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between">
-          <div className="flex-shrink-0 flex items-center">
-            <div className="bg-white/10 p-2 rounded-full mr-3">
-              <Target className="w-8 h-8 text-white" />
-            </div>
-            <span className="text-2xl font-bold text-white">טים אבטחה</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <a 
-              href="https://wa.me/9720534873215" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-4 py-2 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              dir="rtl"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-5 h-5 fill-current">
-                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-              </svg>
-              <span className="font-medium">WhatsApp</span>
-            </a>
-            
-            <Button 
-              asChild
-              className="bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-105"
-              size="lg"
-            >
-              <a 
-                href="tel:+9720534873215" 
-                className="flex items-center gap-3 px-6"
-                dir="rtl"
+    <header role="banner" className="relative z-10">
+      <nav 
+        aria-label="תפריט ראשי"
+        className="bg-gradient-to-r from-blue-900/90 to-blue-800/90 backdrop-blur-sm border-b border-white/10 shadow-lg"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Link 
+                to="/" 
+                className="flex-shrink-0 flex items-center gap-2"
+                aria-label="דף הבית"
               >
-                <Phone className="w-5 h-5" />
-                <span className="text-lg font-medium">053-487-3215</span>
-              </a>
-            </Button>
+                <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center">
+                  <span className="text-blue-900 font-bold text-xl">HR</span>
+                </div>
+                <span className="text-white font-bold text-xl hidden sm:block">אמישב HR</span>
+              </Link>
+              
+              <div className="hidden md:block">
+                <div className="ml-10 flex items-baseline space-x-4 rtl:space-x-reverse">
+                  <Link
+                    to="/"
+                    className="px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700 hover:text-white transition-colors"
+                    aria-current={window.location.pathname === '/' ? 'page' : undefined}
+                  >
+                    בית
+                  </Link>
+                  <Link
+                    to="/careers"
+                    className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-blue-700 hover:text-white transition-colors"
+                    aria-current={window.location.pathname === '/careers' ? 'page' : undefined}
+                  >
+                    קריירה
+                  </Link>
+                </div>
+              </div>
+            </div>
+            
+            <div className="hidden md:block">
+              <div className="ml-4 flex items-center md:ml-6 gap-3">
+                <a
+                  href="https://wa.me/9720534873215"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex items-center gap-1 rounded-md bg-green-600 px-4 py-2 text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all hover:scale-105"
+                  aria-label="צור קשר בווטסאפ"
+                >
+                  <svg 
+                    className="h-5 w-5" 
+                    fill="currentColor" 
+                    viewBox="0 0 24 24" 
+                    aria-hidden="true"
+                  >
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                  </svg>
+                  <span>צור קשר</span>
+                </a>
+                <a
+                  href="tel:+9720534873215"
+                  className="inline-flex items-center gap-1 rounded-md border border-blue-400 px-4 py-2 text-blue-100 hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all hover:border-transparent"
+                  aria-label="התקשר אלינו"
+                >
+                  <svg 
+                    className="h-5 w-5" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  <span>053-487-3215</span>
+                </a>
+              </div>
+            </div>
+            
+            <div className="-mr-2 flex md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                type="button"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                aria-expanded={isOpen}
+                aria-controls="mobile-menu"
+              >
+                <span className="sr-only">{isOpen ? 'סגור תפריט' : 'פתח תפריט'}</span>
+                <svg
+                  className={cn("h-6 w-6", isOpen ? "hidden" : "block")}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+                <svg
+                  className={cn("h-6 w-6", isOpen ? "block" : "hidden")}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+
+        <div
+          className={cn(isOpen ? "block" : "hidden", "md:hidden")}
+          id="mobile-menu"
+        >
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <Link
+              to="/"
+              className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-700 hover:text-white"
+              aria-current={window.location.pathname === '/' ? 'page' : undefined}
+              onClick={() => setIsOpen(false)}
+            >
+              בית
+            </Link>
+            <Link
+              to="/careers"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-blue-700 hover:text-white"
+              aria-current={window.location.pathname === '/careers' ? 'page' : undefined}
+              onClick={() => setIsOpen(false)}
+            >
+              קריירה
+            </Link>
+          </div>
+          <div className="pt-4 pb-3 border-t border-gray-700">
+            <div className="flex flex-col px-5 gap-3">
+              <a
+                href="https://wa.me/9720534873215"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 rounded-md bg-green-600 text-white shadow-sm hover:bg-green-700"
+                aria-label="צור קשר בווטסאפ"
+                onClick={() => setIsOpen(false)}
+              >
+                <svg 
+                  className="h-5 w-5" 
+                  fill="currentColor" 
+                  viewBox="0 0 24 24" 
+                  aria-hidden="true"
+                >
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                </svg>
+                <span>צור קשר בווטסאפ</span>
+              </a>
+              <a
+                href="tel:+9720534873215"
+                className="flex items-center gap-2 px-4 py-2 rounded-md border border-gray-400 text-gray-300 hover:bg-blue-700 hover:text-white"
+                aria-label="התקשר אלינו"
+                onClick={() => setIsOpen(false)}
+              >
+                <svg 
+                  className="h-5 w-5" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <span>053-487-3215</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 };
 
