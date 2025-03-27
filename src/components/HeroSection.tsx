@@ -43,7 +43,7 @@ export default function HeroSection({
       <div className="relative container mx-auto px-4 sm:px-6 flex flex-col items-center justify-center text-center">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            {title || "דרושים לוחמים לרכס הר הזיתים בירושלים | מגן Staffing"}
+            {title || "דרושים מאבטחים למגוון תפקידים בירושלים | מגן Staffing"}
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto">
             {subtitle || "דרישות: רובאי 03 + תעודת לוחם • תנאים מעולים"}

@@ -72,7 +72,7 @@ const Index = () => {
       <main className="overflow-hidden" dir="rtl">
         {/* Hero Section */}
         <HeroSection
-          title="דרושים לוחמים לרכס הר הזיתים בירושלים"
+          title="דרושים מאבטחים למגוון תפקידים בירושלים"
           subtitle="מאבטחים ליחידות מובחרות • תנאים מעולים • אפשרויות קידום"
           imagePosition="right"
           onWhatsAppClick={() => setIsModalOpen(true)}
@@ -109,7 +109,7 @@ const Index = () => {
                 בחר/י מבין משרות האבטחה הפתוחות שלנו והצטרף/י לצוות המקצועי שלנו
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredJobs.map(job => (
                 <JobCard
@@ -126,7 +126,7 @@ const Index = () => {
                 />
               ))}
             </div>
-            
+
             <div className="text-center mt-12">
               <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <a href="/careers" className="flex items-center gap-2">
