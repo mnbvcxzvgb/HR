@@ -46,7 +46,7 @@ export default function HeroSection({
             {title || "דרושים לוחמים לרכס הר הזיתים בירושלים | מגן Staffing"}
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto">
-            {subtitle || "דרישות: רובאי 03 + תעודת לוחם • שכר 63 ש״ח לשעה"}
+            {subtitle || "דרישות: רובאי 03 + תעודת לוחם • תנאים מעולים"}
           </p>
           
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-8 mb-10 max-w-3xl mx-auto">
@@ -54,7 +54,7 @@ export default function HeroSection({
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mb-2 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1.5l-1.8-1.8A2 2 0 0012.2 2H7.8a2 2 0 00-1.4.6L4.6 4H4zm7 5a1 1 0 10-2 0v1H8a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V9z" clipRule="evenodd" />
               </svg>
-              <span className="text-white font-medium">שכר 63 ש״ח לשעה</span>
+              <span className="text-white font-medium">שכר אטרקטיבי</span>
             </div>
             <div className="flex flex-col items-center bg-white/10 backdrop-blur-sm p-3 rounded-lg">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mb-2 text-amber-400" viewBox="0 0 20 20" fill="currentColor">

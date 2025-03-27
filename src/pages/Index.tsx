@@ -73,7 +73,7 @@ const Index = () => {
         {/* Hero Section */}
         <HeroSection
           title="דרושים לוחמים לרכס הר הזיתים בירושלים"
-          subtitle="מאבטחים ליחידות מובחרות • תנאים מעולים • שכר של עד 63 ש״ח לשעה"
+          subtitle="מאבטחים ליחידות מובחרות • תנאים מעולים • אפשרויות קידום"
           imagePosition="right"
           onWhatsAppClick={() => setIsModalOpen(true)}
         />
